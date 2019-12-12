@@ -68,15 +68,15 @@ class CreateHtml
     #@db = Sequel.sqlite("RssData.SQLite3", options)
     #@config = Config.new()
 
-    @page_end = @config.db[:V_news].all.size / @config.limit
+    @page_end = @config.my_db[:V_news].all.size / @config.limit
 
     @page_no = 0
     start = @config.limit * @page_no
 
     @page_no = 0
     (1..@page_end).each{|damy|
-      @report = @config.db[:V_news].limit(@config.limit).offset(start).order(Sequel.desc(:published)).all
-
+      @report = @config.my_db[:V_news].limit(@config.limit).offset(start).order(Sequel.desc(:published)).all
+      
       start = @config.limit * @page_no
 
       # くっつける
@@ -124,7 +124,7 @@ class CreateHtml
     @date = Date.today
     #if @config.my_db[:Article].where(:article_link=>@config.web_pic + "#{@date.to_s}.html").all == [] then
       @page_end = @config.my_db[:V_news].all.size / @config.limit
-      @pic = @config.my_db[:pic].order(Sequel.desc(:使用日)).limit(1000)
+      @pic = @config.my_db[:pic].order(Sequel.desc(:使用日)).limit(50)
 
       # くっつける
       @html = @header + @body_yome + @footer
@@ -172,6 +172,6 @@ end
 
 create_html = CreateHtml.new()
 #create_html.create_category()
-#create_html.create_body()
-create_html.create_body_yome()
+create_html.create_body()
+#create_html.create_body_yome()
 #create_html.lftp()

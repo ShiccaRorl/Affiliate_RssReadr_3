@@ -122,14 +122,14 @@ class CreateHtml
 
 
     @date = Date.today
-    if @config.my_db[:Article].where(:url=>@config.web_pic + "#{@date.to_s}.html").first == [] then
+    #if @config.my_db[:Article].where(:article_link=>@config.web_pic + "#{@date.to_s}.html").all == [] then
       @page_end = @config.db[:news].all.size / @config.limit
-      @pic = @config.my_db[:pic].all
+      @pic = @config.my_db[:pic].order(Sequel.desc(:使用日)).limit(50)
 
       # くっつける
       @html = @header + @body_yome + @footer
       #p changelogmemo
-
+      # 
       erb = ERB.new(@html)
 
       @html = erb.result(binding)
@@ -142,9 +142,9 @@ class CreateHtml
         print "書き込みエラー\n"
       end
     
-    else
-      print "今日は何回するき？\n"
-    end
+    #else
+      #print "今日は何回するき？\n"
+    #end
   end
 
 
@@ -171,7 +171,7 @@ end
 
 
 create_html = CreateHtml.new()
-create_html.create_category()
-create_html.create_body()
-#create_html.create_body_yome()
-create_html.lftp()
+#create_html.create_category()
+#create_html.create_body()
+create_html.create_body_yome()
+#create_html.lftp()

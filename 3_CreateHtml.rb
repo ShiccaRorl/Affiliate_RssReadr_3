@@ -125,7 +125,9 @@ class CreateHtml
     #if @config.my_db[:Article].where(:article_link=>@config.web_pic + "#{@date.to_s}.html").all == [] then
       @page_end = @config.my_db[:V_news].all.size / @config.limit
       @pic = @config.my_db[:pic].order(Sequel.desc(:使用日)).limit(50)
-
+      @pic.each{|pic|
+        pic[:使用日].where(:id=>pic[:id]).update(:使用日=>Time.now)
+      }
       # くっつける
       @html = @header + @body_yome + @footer
       #p changelogmemo
@@ -172,6 +174,6 @@ end
 
 create_html = CreateHtml.new()
 #create_html.create_category()
-create_html.create_body()
-#create_html.create_body_yome()
+#create_html.create_body()
+create_html.create_body_yome()
 #create_html.lftp()

@@ -38,7 +38,7 @@ class Adapter
   end
 
   def get_news()
-    @config.db[:news].all.each{|news|
+    @config.db[:news].order(Sequel.desc(:published)).all.each{|news|
       if @config.my_db[:feeds].where(:id=>news[:id]).all == [] then
         #p Time.parse(news[:published].sub("T", " "))
         published = Time.parse(news[:published].sub("T", " "))

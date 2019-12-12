@@ -40,10 +40,10 @@ class Adapter
   def get_news()
     @config.db[:news].all.each{|news|
       if @config.my_db[:feeds].where(:id=>news[:id]).all == [] then
-      #p Time.parse(news[:published].sub("T", " "))
-      published = Time.parse(news[:published].sub("T", " "))
-      received = Time.parse(news[:received].sub("T", " "))
-      @config.my_db[:news].insert(:id=>news[:id], :feedId=>news[:feedId], :title=>news[:title], :published=>published, :received=>received, :link_href=>news[:link_href])
+        #p Time.parse(news[:published].sub("T", " "))
+        published = Time.parse(news[:published].sub("T", " "))
+        received = Time.parse(news[:received].sub("T", " "))
+        @config.my_db[:news].insert(:id=>news[:id], :feedId=>news[:feedId], :title=>news[:title], :published=>published, :received=>received, :link_href=>news[:link_href])
     
       else
         published = Time.parse(news[:published].sub("T", " "))

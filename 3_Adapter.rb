@@ -2,6 +2,7 @@
 
 require 'csv'
 require 'sequel'
+require 'time'
 require './3_Config'
 
 
@@ -22,26 +23,37 @@ class Adapter
     # feeds と news そのままコピーする
     # 日付は変換する
 
-  def get_rdf()
-    rss = RSS::Maker.make("1.0") do |maker|
-      maker.channel.about = @config.top_home_page + "index.rss"
-      maker.channel.title = @config.home_title
-      maker.channel.description = @config.home_description[0]
-      maker.channel.link = @config.top_home_page
-
-      @config.my_db[:Article].order(:article_date).limit(20).all.each{|report|
-        maker.items.new_item do |item|
-          item.link = report[:article_link]
-          item.title = report[:article_title]
-          item.pubDate = report[:article_date]
+  def get_feeds()
+    @config.db[:feeds].all.each{|feed|
+        if @config.my_db[:feeds].where(:id=>feed[:id]).all == [] then
+          @config.my_db[:feeds].insert(:id=>feed[:id], :text=>feed[:text], :title=>feed[:title], :description=>feed[:description],
+            :xmlUrl=>feed[:xmlUrl], :htmlUrl=>feed[:htmlUrl],
+            :pubdate=>feed[:pubdate], :lastBuidDate=>feed[:lastBuidDate], :created=>feed[:created], :updated=>feed[:updated])
+        else
+          @config.my_db[:feeds].update(:id=>feed[:id], :text=>feed[:text], :title=>feed[:title], :description=>feed[:description],
+            :xmlUrl=>feed[:xmlUrl], :htmlUrl=>feed[:htmlUrl],
+            :pubdate=>feed[:pubdate], :lastBuidDate=>feed[:lastBuidDate], :created=>feed[:created], :updated=>feed[:updated])
         end
-      }
-    end
-    File.open(@config.www_html_out_path + "index.rss", "wb:utf-8") do |f|
-      f.write(rss)
-    end
+    }
+  end
+
+  def get_news()
+    @config.db[:news].all.each{|news|
+      if @config.my_db[:feeds].where(:id=>news[:id]).all == [] then
+      #p Time.parse(news[:published].sub("T", " "))
+      published = Time.parse(news[:published].sub("T", " "))
+      received = Time.parse(news[:received].sub("T", " "))
+      @config.my_db[:news].insert(:id=>news[:id], :feedId=>news[:feedId], :title=>news[:title], :published=>published, :received=>received, :link_href=>news[:link_href])
+    
+      else
+        published = Time.parse(news[:published].sub("T", " "))
+        received = Time.parse(news[:received].sub("T", " "))
+        @config.my_db[:news].update(:id=>news[:id], :feedId=>news[:feedId], :title=>news[:title], :published=>published, :received=>received, :link_href=>news[:link_href])
+      end
+    }
   end
 end
 
-@affilete_RssReadr_Create_Rss = Create_Rss.new()
-@affilete_RssReadr_Create_Rss.get_rdf()
+adapter = Adapter.new()
+#adapter.get_feeds()
+adapter.get_news()

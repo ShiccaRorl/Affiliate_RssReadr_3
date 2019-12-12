@@ -44,8 +44,8 @@ end
             FileUtils.cp(file, @config.web_pic + date.to_s + "/")
             #データベースに保存する
             Dir.glob(@config.web_pic + date.to_s + "/*.*").each{|file2|
-              if @config.my_db[:Article_pic].where(:url1=>file).all == [] then
-                p @config.my_db[:Article_pic].insert(:id=>@config.my_db[:Article_pic].max(:id)+1, :url1=>file, :url2=>file2, :url3=>file2.sub!(@config.web_pic, "./"), :size=>File.size(file), :date=>File.stat(file).mtime, :Create_time=>Time.now())
+              if @config.my_db[:Article_pic].where(:HD_path=>file).all == [] then
+                 @config.my_db[:Article_pic].insert(:id=>@config.my_db[:Article_pic].max(:id)+1, :HD_path=>file, :HD_WWW_Path=>file2, :WWW_Path=>file2.sub(@config.web_pic, "./"), :size=>File.size(file), :date=>File.stat(file).mtime, :Create_time=>Time.now())
                 cunt = cunt + 1
               end
            }

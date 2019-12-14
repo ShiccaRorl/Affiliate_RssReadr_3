@@ -5,7 +5,7 @@ require "date"
 require 'sequel'
 
 require './3_Config'
-#require './3_kyou_no_yome'
+require './3_kyou_no_yome'
 
 class CreateHtml
   attr_accessor :keyword, :css_theme_path, :config, :report
@@ -130,6 +130,8 @@ class CreateHtml
         @config.my_db[:pic].where(:id=>pic[:id]).update(:使用日=>Time.now)
       }
       
+      kyou_no_yome = Kyou_no_yome.new()
+      kyou_no_yome.pic_get(@pic)
 
       # くっつける
       @html = @header + @body_yome + @footer

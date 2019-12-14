@@ -23,12 +23,13 @@ def organize()
 end
 
 
-  def pic_get()
+  def pic_get(pic = [])
+    @pic = pic
     date = Date.today
     cunt = 0
     i = 0
-    Dir.glob("#{@config.pic_path}**/*.jpeg\0#{@config.pic_path}**/*.jpg\0#{@config.pic_path}**/*.png\0#{@config.pic_path}**/*.gif").each{|file|
-      if  File.size(file) >= @config.pic_size_min and File.size(file) <= @config.pic_size_max then
+    @pic.each{|file|
+      if  File.size(file[:HD_Path]) >= @config.pic_size_min and File.size(file[:HD_Path]) <= @config.pic_size_max then
         #if @config.my_db[:pic].where(:url1=>file).all == [] then
           #print "嫁ゲット\n"
           #print file + "\n"
@@ -46,24 +47,24 @@ end
           #while Dir.glob(@config.web_pic + date.to_s + "/*.*").size <= 50 do
             p s
             begin
-              FileUtils.cp(file, @config.web_pic + date.to_s + "/")
+              FileUtils.cp(file[:HD_Path], @config.web_pic + date.to_s + "/")
             rescue
               p "FileUtils err"
             end
             s=s+1
           #end
-          if @config.my_db[:Article_pic].where(:HD_Path=>file).all == [] then 
-            FileUtils.cp(file, @config.web_pic + date.to_s + "/")
+          if @config.my_db[:Article_pic].where(:HD_Path=>file[:HD_Path]).all == [] then 
+            FileUtils.cp(file[:HD_Path], @config.web_pic + date.to_s + "/")
             #データベースに保存する
             Dir.glob(@config.web_pic + date.to_s + "/*.*").each{|file2|
-              if @config.my_db[:Article_pic].where(:HD_Path=>file).all == [] then
+              if @config.my_db[:Article_pic].where(:HD_Path=>file[:HD_Path]).all == [] then
 
                 begin
-                  @config.my_db[:Article_pic].insert(:id=>@config.my_db[:Article_pic].max(:id)+1, :HD_Path=>file, :HD_WWW_Path=>file2, :WWW_Path=>@config.top_home_page + @config.web_pic + file2.sub("./", ""), :size=>File.size(file), :date=>File.stat(file).mtime, :Create_time=>Time.now())
+                  @config.my_db[:Article_pic].insert(:id=>@config.my_db[:Article_pic].max(:id)+1, :HD_Path=>file[:HD_Path], :HD_WWW_Path=>file2, :WWW_Path=>@config.top_home_page + "Pic/" + file2.sub(@config.web_pic, ""), :size=>File.size(file[:HD_Path]), :date=>File.stat(file[:HD_Path]).mtime, :Create_time=>Time.now())
                 rescue
                   p "SQL err"
                   p "======"
-                  p file
+                  p file[:HD_Path]
                   p file2
                   p @config.top_home_page + "Pic/" + file2.sub(@config.web_pic, "")
                 end

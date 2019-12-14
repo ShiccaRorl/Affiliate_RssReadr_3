@@ -39,6 +39,7 @@ class Adapter
 
   def get_news()
     @config.db[:news].order(Sequel.desc(:published)).all.each{|news|
+      begin
       if @config.my_db[:feeds].where(:id=>news[:id]).all == [] then
         #p Time.parse(news[:published].sub("T", " "))
         published = Time.parse(news[:published].sub("T", " "))
@@ -50,6 +51,9 @@ class Adapter
         received = Time.parse(news[:received].sub("T", " "))
         @config.my_db[:news].update(:id=>news[:id], :feedId=>news[:feedId], :title=>news[:title], :published=>published, :received=>received, :link_href=>news[:link_href])
       end
+    rescue
+      p "謎エラー"
+    end
     }
   end
 end

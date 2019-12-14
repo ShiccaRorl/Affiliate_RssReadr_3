@@ -52,12 +52,12 @@ class Adapter
         @config.my_db[:news].update(:id=>news[:id], :feedId=>news[:feedId], :title=>news[:title], :published=>published, :received=>received, :link_href=>news[:link_href])
       end
     rescue
-      p "謎エラー"
+      print "謎エラー\n"
     end
     }
   end
 end
 
-adapter = Adapter.new()
+#adapter = Adapter.new()
 #adapter.get_feeds()
-adapter.get_news()
+#adapter.get_news()

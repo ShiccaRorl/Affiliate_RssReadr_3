@@ -30,4 +30,32 @@ require './3_inport'
 # サムネイムも出来るだけやる
 
 
+adapter = Adapter.new()
+#adapter.get_feeds()
+adapter.get_news()
 
+
+create_rss = Create_Rss.new()
+
+
+create_html = CreateHtml.new()
+#create_html.create_category()
+#create_html.create_body()
+#create_html.create_body_yome()
+#create_html.lftp()
+
+
+
+
+puts 'Start'
+Parallel.each([
+  create_rss.get_rdf(),
+  create_html.create_category(),
+  create_html.create_body(),
+  create_html.create_body_yome(),
+  create_html.lftp(),
+  ], in_threads: 2) do |i|
+  sleep 1 if i == 2
+  puts i
+end
+puts 'End'

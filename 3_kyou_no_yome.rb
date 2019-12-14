@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-require "date"
-require "fileutils"
+#require "date"
+#require "fileutils"
 
-require 'sequel'
-require './3_Config'
+#require 'sequel'
+#require './3_Config'
 
 
 class Kyou_no_yome
@@ -82,6 +82,6 @@ end
   end
 
 end
-@affilete_RssReadr_Kyou_no_yome = Kyou_no_yome.new()
-@affilete_RssReadr_Kyou_no_yome.pic_get()
+#@affilete_RssReadr_Kyou_no_yome = Kyou_no_yome.new()
+#@affilete_RssReadr_Kyou_no_yome.pic_get()
 #@affilete_RssReadr_Kyou_no_yome.pic_copy()

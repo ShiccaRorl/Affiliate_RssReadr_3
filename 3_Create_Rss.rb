@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-require 'rss'
-require "date"
+#require 'rss'
+#require "date"
 
-require 'sequel'
-require './3_Config'
+#require 'sequel'
+#require './3_Config'
 
 
 class Create_Rss
@@ -33,5 +33,5 @@ class Create_Rss
   end
 end
 
-@affilete_RssReadr_Create_Rss = Create_Rss.new()
-@affilete_RssReadr_Create_Rss.get_rdf()
+#@affilete_RssReadr_Create_Rss = Create_Rss.new()
+#@affilete_RssReadr_Create_Rss.get_rdf()

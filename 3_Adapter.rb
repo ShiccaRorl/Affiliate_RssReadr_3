@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-require 'csv'
-require 'sequel'
-require 'time'
-require './3_Config'
+#require 'csv'
+#require 'sequel'
+#require 'time'
+#require './3_Config'
 
 
 

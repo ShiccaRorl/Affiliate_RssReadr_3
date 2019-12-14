@@ -23,7 +23,8 @@ def organize()
 end
 
 
-  def pic_get(date = Date.today)
+  def pic_get()
+    date = Date.today
     cunt = 0
     i = 0
     Dir.glob("#{@config.pic_path}**/*.jpeg\0#{@config.pic_path}**/*.jpg\0#{@config.pic_path}**/*.png\0#{@config.pic_path}**/*.gif").each{|file|
@@ -56,13 +57,15 @@ end
             #データベースに保存する
             Dir.glob(@config.web_pic + date.to_s + "/*.*").each{|file2|
               if @config.my_db[:Article_pic].where(:HD_Path=>file).all == [] then
-                p file
-                p file2
-                p @config.top_home_page + file2.sub(@config.web_pic, "")
+
                 begin
-                 @config.my_db[:Article_pic].insert(:id=>@config.my_db[:Article_pic].max(:id)+1, :HD_Path=>file, :HD_WWW_Path=>file2)#, :WWW_Path=>@config.top_home_page + @config.web_pic + file2.sub("./", ""), :size=>File.size(file), :date=>File.stat(file).mtime, :Create_time=>Time.now())
+                  @config.my_db[:Article_pic].insert(:id=>@config.my_db[:Article_pic].max(:id)+1, :HD_Path=>file, :HD_WWW_Path=>file2, :WWW_Path=>@config.top_home_page + @config.web_pic + file2.sub("./", ""), :size=>File.size(file), :date=>File.stat(file).mtime, :Create_time=>Time.now())
                 rescue
                   p "SQL err"
+                  p "======"
+                  p file
+                  p file2
+                  p @config.top_home_page + "Pic/" + file2.sub(@config.web_pic, "")
                 end
                  cunt = cunt + 1
               end

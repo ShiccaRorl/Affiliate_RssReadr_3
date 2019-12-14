@@ -124,7 +124,7 @@ class CreateHtml
     @date = Date.today
     #if @config.my_db[:Article].where(:article_link=>@config.web_pic + "#{@date.to_s}.html").all == [] then
       @page_end = @config.my_db[:V_news].all.size / @config.limit
-      @pic = @config.my_db[:pic].order(Sequel.desc(:使用日)).limit(50)
+      @pic = @config.my_db[:pic].order(:使用日).limit(50)
 
       @pic.each{|pic|
         @config.my_db[:pic].where(:id=>pic[:id]).update(:使用日=>Time.now)

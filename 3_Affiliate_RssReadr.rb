@@ -6,7 +6,7 @@ require 'sequel'
 require "csv"
 
 require './3_Config'
-#require './3_kyou_no_yome'
+require './3_kyou_no_yome'
 
 # 動作を考えた
 

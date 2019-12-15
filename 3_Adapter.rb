@@ -41,7 +41,6 @@ class Adapter
   end
 
   def get_news()
-    
     loop{
       begin
         newss = @config.db[:news].order(Sequel.desc(:published)).all
@@ -59,17 +58,43 @@ class Adapter
             received = Time.parse(news[:received].sub("T", " "))
             @config.my_db[:news].update(:id=>news[:id], :feedId=>news[:feedId], :title=>news[:title], :published=>published, :received=>received, :link_href=>news[:link_href])
           end
-        
         rescue
           print "謎エラー\n"
         end
         sleep(1)
-
     }
-
   end
+
+  def get_news2()
+    loop{
+      begin
+        news = @config.db[:news].where(:err=>false).order(Sequel.desc(:published)).all
+          #news = newss[rand(:news.size)]
+          if @config.my_db[:feeds].where(:id=>news[:id]).first == nil then
+            p "insert"
+            p news[:id]
+            p Time.parse(news[:published].sub("T", " "))
+            published = Time.parse(news[:published].sub("T", " "))
+            received = Time.parse(news[:received].sub("T", " "))
+            @config.my_db[:news].insert(:id=>news[:id], :feedId=>news[:feedId], :title=>news[:title], :published=>published, :received=>received, :link_href=>news[:link_href])
+          else
+            p "update"
+            published = Time.parse(news[:published].sub("T", " "))
+            received = Time.parse(news[:received].sub("T", " "))
+            @config.my_db[:news].update(:id=>news[:id], :feedId=>news[:feedId], :title=>news[:title], :published=>published, :received=>received, :link_href=>news[:link_href])
+          end
+        rescue
+          print "謎エラー\n"
+          @config.my_db[:news].where(:id=>news[:id]).update(:err=>true)
+        end
+        sleep(1)
+    }
+  end
+
+
 end
 
 adapter = Adapter.new()
 #adapter.get_feeds()
 adapter.get_news()
+adapter.get_news2()

@@ -51,6 +51,7 @@ puts 'Start'
 Parallel.each([
   adapter.get_feeds(),
   adapter.get_news(),
+  adapter.get_news2(),
   create_rss.get_rdf()
 
   ], in_threads: 2) do |i|

@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-#require 'csv'
-#require 'sequel'
-#require 'time'
-#require './3_Config'
+require 'csv'
+require 'sequel'
+require 'time'
+require './3_Config'
 
 
 
@@ -58,6 +58,6 @@ class Adapter
   end
 end
 
-#adapter = Adapter.new()
-#adapter.get_feeds()
-#adapter.get_news()
+adapter = Adapter.new()
+adapter.get_feeds()
+adapter.get_news()

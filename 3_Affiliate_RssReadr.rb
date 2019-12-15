@@ -32,7 +32,7 @@ require './3_inport'
 
 adapter = Adapter.new()
 #adapter.get_feeds()
-adapter.get_news()
+#adapter.get_news()
 
 
 #create_rss = Create_Rss.new()
@@ -49,6 +49,8 @@ adapter.get_news()
 
 puts 'Start'
 Parallel.each([
+  adapter.get_feeds(),
+  adapter.get_news(),
 
 
   ], in_threads: 2) do |i|

@@ -5,7 +5,7 @@ require "date"
 require 'sequel'
 
 require './3_Config'
-require './3_kyou_no_yome'
+#require './3_kyou_no_yome'
 
 class CreateHtml
   attr_accessor :keyword, :css_theme_path, :config, :report

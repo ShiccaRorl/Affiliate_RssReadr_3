@@ -180,5 +180,5 @@ end
 create_html = CreateHtml.new()
 create_html.create_category()
 create_html.create_body()
-create_html.create_body_yome()
+#create_html.create_body_yome()
 create_html.lftp()

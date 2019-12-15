@@ -1,8 +1,0 @@
-
-
-
-
-open "kyounoyome.x.fc2.com" -p 21 -u "kyounoyome","X?GF1ytvn@"
-cd   "./"
-lcd  "e:/www/"
-mirror -R

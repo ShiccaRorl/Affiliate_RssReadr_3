@@ -1,3 +1,0 @@
-ruby convert.rb
-
-pause

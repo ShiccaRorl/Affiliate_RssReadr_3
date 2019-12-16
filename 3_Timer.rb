@@ -14,4 +14,15 @@ class Timer
         end
         return false
     end
+
+    def reset()
+        @time2 = Time.now
+    end
 end
+
+
+#time = Timer.new(10)
+#loop{
+#    p time.get_time()
+#sleep (1)
+#}

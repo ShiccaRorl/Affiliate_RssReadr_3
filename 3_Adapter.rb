@@ -45,7 +45,7 @@ class Adapter
       begin
         newss = @config.db[:news].order(Sequel.desc(:published)).all
           news = newss[rand(:news.size)]
-          if @config.my_db[:feeds].where(:id=>news[:id]).first == nil then
+          if @config.my_db[:news].where(:id=>news[:id]).first == nil then
             p "insert"
             p news[:id]
             p Time.parse(news[:published].sub("T", " "))
@@ -68,7 +68,7 @@ class Adapter
   def get_news2()
     loop{
       begin
-        news = @config.db[:news].where(:err=>false).order(Sequel.desc(:published)).all
+        news = @config.db[:news].where(:err=>false).order(Sequel.desc(:published)).limit(10)
           #news = newss[rand(:news.size)]
           if @config.my_db[:feeds].where(:id=>news[:id]).first == nil then
             p "insert"

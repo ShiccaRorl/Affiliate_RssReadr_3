@@ -10,9 +10,9 @@ require 'parallel'
 require './3_Config'
 require './3_Adapter'
 require './3_Create_Rss'
-#require './3_CreateHtml'
+require './3_CreateHtml'
 require './3_inport'
-
+require './3_Timer'
 
 
 # 動作を考えた
@@ -35,16 +35,23 @@ adapter = Adapter.new()
 #adapter.get_news()
 
 
-create_rss = Create_Rss.new()
 
 
-#create_html = CreateHtml.new()
-#create_html.create_category()
-#create_html.create_body()
-#create_html.create_body_yome()
-#create_html.lftp()
+def create_html()
+  timer = Timer(60*60)
+  while timer.get_time == true then
+    create_html = CreateHtml.new()
+    create_html.create_category()
+    create_html.create_body()
+    create_html.create_body_yome()
+    create_html.lftp()
 
-
+    create_rss = Create_Rss.new()
+    create_rss.get_rdf()
+    sleep(5)
+  end
+  timer.reset
+end
 
 
 puts 'Start'
@@ -52,7 +59,7 @@ Parallel.each([
   adapter.get_feeds(),
   adapter.get_news(),
   adapter.get_news2(),
-  create_rss.get_rdf()
+  create_html()
 
   ], in_threads: 2) do |i|
   sleep 1 if i == 2

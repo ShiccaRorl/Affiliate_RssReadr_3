@@ -64,7 +64,7 @@ class CronTab(object):
 
         t1 += timedelta(minutes=1)
         s1 = (t1 - datetime.now()).seconds + 1
-        print "Checking again in %s seconds" % s1
+        print ("Checking again in %s seconds" % s1)
         job = gevent.spawn_later(s1, self._check)
 
     def run(self):

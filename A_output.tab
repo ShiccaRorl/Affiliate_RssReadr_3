@@ -1,3 +1,3 @@
-59 * * * * ./3_CreateHtml.cmd
-* * * 1 * ./A_Adapter.py
-10 * * * * get_all_now(300)
+0 * * * * ./3_CreateHtml.cmd
+0 7 * * 1 get_all_sin()
+*/10 * * * * get_all_now(300)

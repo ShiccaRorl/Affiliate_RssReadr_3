@@ -2,7 +2,7 @@
 # pip install croniter
 
 from crontab import CronTab
-import A_ClonTab
+import A_Adapter
 
 class CrontabControl:
     def __init__(self):

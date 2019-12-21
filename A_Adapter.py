@@ -93,7 +93,7 @@ def get_all_now(day):
             for news in newss:
 
     
-                #print("===")
+                print(row2.title)
                 print(row2.published.replace("T", " "))
                 print(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
                 time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')

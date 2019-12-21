@@ -39,7 +39,7 @@ adapter = Adapter.new()
 
 def create_html()
   timer = Timer(60*60)
-  while timer.get_time == true then
+  while timer.get_time == true do
     create_html = CreateHtml.new()
     create_html.create_category()
     create_html.create_body()
@@ -50,7 +50,7 @@ def create_html()
     create_rss.get_rdf()
     sleep(5)
   end
-  timer.reset
+  timer.reset()
 end
 
 

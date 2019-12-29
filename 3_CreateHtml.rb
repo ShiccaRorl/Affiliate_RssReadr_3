@@ -178,7 +178,7 @@ class CreateHtml
   def html_up()
 
     Dir.glob("#{@config.www_html_out_path}**/*.html").each{|file|
-      system("curl -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} --ftp-create-dirs -ssl ftp:#{@config.ftp_server}")
+      system("curl -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} --ftp-create-dirs -ssl ftp:#{@config.ftp_server}:./")
     }
   end
 end
@@ -186,7 +186,7 @@ end
 
 create_html = CreateHtml.new()
 create_html.create_category()
-create_html.create_body()
+#create_html.create_body()
 #create_html.create_body_yome()
 #create_html.lftp()
 create_html.html_up()

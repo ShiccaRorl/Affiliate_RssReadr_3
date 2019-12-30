@@ -127,7 +127,7 @@ def get_all_now(day):
 
 #get_all_old()
 #get_all_sin()
-get_all_now(100)
+#get_all_now(100)
 
 
 from time import sleep

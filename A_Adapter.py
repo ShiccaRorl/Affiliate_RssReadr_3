@@ -86,7 +86,7 @@ def get_all_sin():
 
 def get_all_now(day):
 
-    for row2 in session2.query(QuiteRSS).limit(day):
+    for row2 in session2.query(QuiteRSS).order_by(desc(News.received)).limit(day):
         #print(row2.id, row2.feedId, row2.title, row2.published, row2.received, row2.link_href)
         #print(row2.published)
         time.sleep(1)
@@ -126,8 +126,8 @@ def get_all_now(day):
 
 
 #get_all_old()
-get_all_sin()
-#get_all_now(100)
+#get_all_sin()
+get_all_now(100)
 
 
 from time import sleep
@@ -187,13 +187,13 @@ import sys
 args = sys.argv
 if args[1] == []:
     main()
-elif args == "old":
+elif args[1] == "old":
     get_all_old()
-elif args == "sin":
+elif args[1] == "sin":
     get_all_sin()
-elif args == "now":
+elif args[1] == "now":
     get_all_now(100)
-elif args == "html":
+elif args[1] == "html":
     command = 'C:/Affiliate_RssReadr_3/Affiliate_RssReadr_3/3_CreateHtml.cmd > ./part1.txt'
     subprocess.run(command)
 else:

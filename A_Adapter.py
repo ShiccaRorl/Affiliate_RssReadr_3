@@ -1,4 +1,3 @@
-#! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
 from sqlalchemy import create_engine
@@ -127,7 +126,7 @@ def get_all_now(day):
 
 
 #get_all_old()
-#get_all_sin()
+get_all_sin()
 #get_all_now(100)
 
 
@@ -186,7 +185,7 @@ import sys
 
 
 args = sys.argv
-if args[1] == nul:
+if args[1] == []:
     main()
 elif args == "old":
     get_all_old()

@@ -1,1 +1,3 @@
-call pyhton 3_Adapter.py now
+call Python 3_Adapter.py now
+
+pause

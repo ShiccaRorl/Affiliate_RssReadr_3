@@ -1,1 +1,2 @@
-call pyhton 3_Adapter.py old
+call Python 3_Adapter.py old
+pause

@@ -1,87 +1,69 @@
-"""Gevent based crontab implementation"""
+# -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
-import gevent
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+#from A_News import News
+from A_QuiteRSS import QuiteRSS
+import datetime
+from sqlalchemy import desc
 
-# Some utility classes / functions first
-def conv_to_set(obj):
-    """Converts to set allowing single integer to be provided"""
+import time
+import threading
+from concurrent.futures import ThreadPoolExecutor
+ 
+engine2 = create_engine('sqlite:///C:/Users/ban/AppData/Local/QuiteRss/QuiteRss/feeds.db', echo=False)
+Session2 = sessionmaker(bind=engine2)
+session2 = Session2()
 
-    if isinstance(obj, (int, long)):
-        return set([obj])  # Single item
-    if not isinstance(obj, set):
-        obj = set(obj)
-    return obj
+def dateTimeApp():
+    for row2 in session2.query(QuiteRSS).order_by(desc(News.received)):
+        #print(row2.id, row2.feedId, row2.title, row2.published, row2.received, row2.link_href)
+        #print(row2.published)
+        time.sleep(1)
+        i = 0
+        if i <= 20:
+            try:
+                newss = session1.query(News.id).order_by(desc(News.received)).all()
+                for news in newss:
 
-class AllMatch(set):
-    """Universal set - match everything"""
-    def __contains__(self, item): 
-        return True
+    
+                    print(row2.title)
+                    print(row2.published.replace("T", " "))
+                    print(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+                    time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+                    time2 = datetime.datetime.strptime(row2.received.replace("T", " "), '%Y-%m-%d %H:%M:%S')
 
-allMatch = AllMatch()
+        
+                    #ed_user = News(row.id==row2.id, row.feedId==row2.feedId, row.title==row2.title, row.published==time1, row.received==time2, row.link_href==row2.link_href)
+                    #session1.add(ed_user)
 
-class Event(object):
-    """The Actual Event Class"""
+                    published = session.query(News).filter(User.id==none).first()
+                    published.published = time1
+                    session2.commit()
 
-    def __init__(self, action, minute=allMatch, hour=allMatch, 
-                       day=allMatch, month=allMatch, daysofweek=allMatch, 
-                       args=(), kwargs={}):
-        self.mins = conv_to_set(minute)
-        self.hours = conv_to_set(hour)
-        self.days = conv_to_set(day)
-        self.months = conv_to_set(month)
-        self.daysofweek = conv_to_set(daysofweek)
-        self.action = action
-        self.args = args
-        self.kwargs = kwargs
+                    print ("データ取得")
+            except:
+                    print ("不思議なエラー")
+                    # 不思議エラーが20回続くと終わる。
+                    print ("不思議エラー " + str(i) + " 回目")
+                    i = i + 1
+                    if i >= 20:
+                        break
 
-    def matchtime(self, t1):
-        """Return True if this event should trigger at the specified datetime"""
-        return ((t1.minute     in self.mins) and
-                (t1.hour       in self.hours) and
-                (t1.day        in self.days) and
-                (t1.month      in self.months) and
-                (t1.weekday()  in self.daysofweek))
+        
+    # セッション・クローズ
+    # DB処理が不要になったタイミングやスクリプトの最後で実行
+    session2.close()
 
-    def check(self, t):
-        """Check and run action if needed"""
 
-        if self.matchtime(t):
-            self.action(*self.args, **self.kwargs)
 
-class CronTab(object):
-    """The crontab implementation"""
 
-    def __init__(self, *events):
-        self.events = events
 
-    def _check(self):
-        """Check all events in separate greenlets"""
 
-        t1 = datetime(*datetime.now().timetuple()[:5])
-        for event in self.events:
-            gevent.spawn(event.check, t1)
+dateTimeApp()
 
-        t1 += timedelta(minutes=1)
-        s1 = (t1 - datetime.now()).seconds + 1
-        print ("Checking again in %s seconds" % s1)
-        job = gevent.spawn_later(s1, self._check)
 
-    def run(self):
-        """Run the cron forever"""
 
-        self._check()
-        while True:
-            gevent.sleep(60)
 
-import os 
-def test_task():
-    """Just an example that sends a bell and asd to all terminals"""
 
-    os.system('echo asd | wall')  
 
-cron = CronTab(
-  Event(test_task, 22, 1 ),
-  Event(test_task, 0, range(9,18,2), daysofweek=range(0,5)),
-)
-cron.run()

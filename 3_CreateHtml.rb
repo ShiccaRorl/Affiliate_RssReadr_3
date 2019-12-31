@@ -178,8 +178,8 @@ class CreateHtml
   def html_up()
 
     Dir.glob("#{@config.www_html_out_path}**/*.html").each{|file|
-      system("curl -\# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w " + '%{url_effective}:%{http_code}\n' + "--ftp-create-dirs -ftp-ssl -ftp-pasv ftp:#{@config.ftp_server}/")
-      sleep(1)
+      system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w " + '%{url_effective}:%{http_code}\n' + "--ftp-create-dirs -ftp-ssl -ftp-pasv ftp:#{@config.ftp_server}/")
+      sleep(2)
     }
   end
 end

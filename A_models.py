@@ -30,6 +30,7 @@ class QuiteRSS(Base):
     feedId = Column(Integer)
     title = Column(String)
     published = Column(String)
+    published_datetime = Column(DateTime)
     received = Column(String)
     link_href = Column(String)
  

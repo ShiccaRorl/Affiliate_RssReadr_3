@@ -46,7 +46,7 @@ class CreateHtml
     #@db = Sequel.sqlite("RssData.SQLite3", options)
 
     @config.home_category.each{|x, y|
-      @report = @config.my_db[:V_news].where(Sequel.ilike(:news_title, "%#{ x }%")).limit(100).order(Sequel.desc(:published)).all
+      @report = @config.db[:V_news].where(Sequel.ilike(:news_title, "%#{ x }%")).limit(100).order(Sequel.desc(:published)).all
       @html = @header + @body + @footer
 
       #p changelogmemo
@@ -68,14 +68,14 @@ class CreateHtml
     #@db = Sequel.sqlite("RssData.SQLite3", options)
     #@config = Config.new()
 
-    @page_end = @config.my_db[:V_news].all.size / @config.limit
+    @page_end = @config.db[:V_news].all.size / @config.limit
 
     @page_no = 0
     start = @config.limit * @page_no
 
     @page_no = 0
     (1..@page_end).each{|damy|
-      @report = @config.my_db[:V_news].limit(@config.limit).offset(start).order(Sequel.desc(:published)).all
+      @report = @config.db[:V_news].limit(@config.limit).offset(start).order(Sequel.desc(:published)).all
       
       start = @config.limit * @page_no
 

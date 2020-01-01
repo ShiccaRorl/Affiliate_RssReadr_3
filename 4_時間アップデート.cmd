@@ -1,3 +1,3 @@
-call Python 3_Adapter.py sin
+call Python A_TimeApp.py
 
 pause

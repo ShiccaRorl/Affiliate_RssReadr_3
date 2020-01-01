@@ -32,11 +32,8 @@ def get_all_old():
 
     
                 print(row2.title)
-                print(row2.published.replace("T", " "))
-                print(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
                 time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
                 time2 = datetime.datetime.strptime(row2.received.replace("T", " "), '%Y-%m-%d %H:%M:%S')
-
         
                 ed_user = News(row.id==row2.id, row.feedId==row2.feedId, row.title==row2.title, row.published==time1, row.received==time2, row.link_href==row2.link_href)
                 session1.add(ed_user)
@@ -61,11 +58,8 @@ def get_all_sin():
         try:
             newss = session1.query(News.id).order_by(desc(News.received)).all()
             for news in newss:
-
-    
                 print(row2.title)
-                print(row2.published.replace("T", " "))
-                print(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+
                 time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
                 time2 = datetime.datetime.strptime(row2.received.replace("T", " "), '%Y-%m-%d %H:%M:%S')
 

@@ -140,6 +140,4 @@ def get_all_now(day):
 if __name__ == '__main__':
     #get_all_old()
     #get_all_sin()
-    #get_all_now(100)
-
-
+    get_all_now(100)

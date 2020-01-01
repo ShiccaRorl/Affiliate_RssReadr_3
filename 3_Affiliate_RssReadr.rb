@@ -30,7 +30,7 @@ require './3_Timer'
 # サムネイムも出来るだけやる
 
 
-adapter = Adapter.new()
+#adapter = Adapter.new()
 #adapter.get_feeds()
 #adapter.get_news()
 
@@ -53,16 +53,3 @@ def create_html()
   timer.reset()
 end
 
-
-puts 'Start'
-Parallel.each([
-  adapter.get_feeds(),
-  adapter.get_news(),
-  adapter.get_news2(),
-  create_html()
-
-  ], in_threads: 2) do |i|
-  sleep 1 if i == 2
-  puts i
-end
-puts 'End'

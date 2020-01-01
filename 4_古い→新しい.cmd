@@ -1,2 +1,2 @@
-call Python 3_Adapter.py old
+call Python A_DataCopy.py old
 pause

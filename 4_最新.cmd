@@ -1,3 +1,3 @@
-call Python 3_Adapter.py now
+call Python A_DataCopy.py now
 
 pause

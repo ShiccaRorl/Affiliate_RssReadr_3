@@ -142,27 +142,4 @@ if __name__ == '__main__':
     #get_all_sin()
     #get_all_now(100)
 
-    import sys
-    import subprocess
-
-    args = sys.argv
-    if args[1] == []:
-        print ("オプション old 古い順番からデータをコピーします。")
-        print ("オプション sin 新しい順番からデータをコピーします。")
-        print ("オプション now 直近のデータをコピーします。")
-    elif args[1] == "old":
-        get_all_old()
-    elif args[1] == "sin":
-        get_all_sin()
-    elif args[1] == "now":
-        get_all_now(100)
-    elif args[1] == "html":
-        command = 'C:/Affiliate_RssReadr_3/Affiliate_RssReadr_3/3_CreateHtml.cmd > ./part1.txt'
-        subprocess.run(command)
-    else:
-        print ("オプション old 古い順番からデータをコピーします。")
-        print ("オプション sin 新しい順番からデータをコピーします。")
-        print ("オプション now 直近のデータをコピーします。")
-
-
 

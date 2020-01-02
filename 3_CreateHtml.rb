@@ -53,7 +53,12 @@ class CreateHtml
       erb = ERB.new(@html)
       @html = erb.result(binding)
       begin
-        File.write(@config.www_html_out_path + "#{y}.html", @html)
+        p @config.www_html_out_path + "#{y}.html"
+        #File.write(@config.www_html_out_path + "#{y}.html", @html)
+        file = File.open(@config.www_html_out_path + "#{y}.html", "w")
+        file.puts @html
+        file.close
+      
       rescue
         print "カテゴリー　書き込みエラー\n"
       end
@@ -178,7 +183,8 @@ class CreateHtml
   def html_up()
 
     Dir.glob("#{@config.www_html_out_path}**/*.html").each{|file|
-      system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w " + '%{url_effective}:%{http_code}\n' + "--ftp-create-dirs -ftp-ssl -ftp-pasv ftp:#{@config.ftp_server}/")
+      #system("curl -# -T " + "#{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w " + "%{url_effective}:%{http_code}\n" --ftp-create-dirs -ftp-ssl -ftp-pasv "ftp:#{@config.ftp_server}/")
+      p "curl -# -T " + file + "-u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code}\n --ftp-create-dirs -ftp-ssl -ftp-pasv ftp:#{@config.ftp_server}/"
       sleep(2)
     }
   end

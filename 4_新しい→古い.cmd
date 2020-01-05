@@ -1,3 +1,1 @@
-call Python A_DataCopy.py sin
-
-pause
+Python A_DataCopy.py sin

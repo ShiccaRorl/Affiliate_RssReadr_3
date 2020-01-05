@@ -39,8 +39,8 @@ class DataCopy():
     def get_all_old(self):
         i = 0
         s = 0
+        self.session_open()
         for row2 in self.session2.query(QuiteRSS).order_by(News.id).all(): # 全データ指定
-            self.session_open()
             try:
                 print(row2.title)
                 time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
@@ -63,9 +63,9 @@ class DataCopy():
                 print ("データがあります。")
                 print(str(row2.id))
                 s = s + 1
-            self.session_close()
+            
             sleep(1)
-
+        self.session_close()
         print("取得データ" + str(i) + "個目")
         print("取得済データ" + str(s) + "個目")
 
@@ -74,8 +74,9 @@ class DataCopy():
     def get_all_sin(self):
         i = 0
         s = 0
+        self.session_open()
         for row2 in self.session2.query(QuiteRSS).order_by(desc(News.id)).all(): # 全データ指定
-            self.session_open()
+            
             try:
                 print(row2.title)
                 time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
@@ -98,9 +99,9 @@ class DataCopy():
                 print ("データがあります。")
                 print(str(row2.id))
                 s = s + 1
-            self.session_close()
+            
             sleep(1)
-
+        self.session_close()
         print("取得データ" + str(i) + "個目")
         print("取得済データ" + str(s) + "個目")
 
@@ -109,11 +110,10 @@ class DataCopy():
     def get_all_now(self,day):
         i = 0
         s = 0
+        self.session_open()
         for row2 in self.session2.query(QuiteRSS).order_by(desc(News.id)).limit(day): # データ指定
-            self.session_open()
             t = 0
             if t <= 20:
-            
                 try:
                     print(row2.title)
                     time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
@@ -137,9 +137,9 @@ class DataCopy():
                     print(str(row2.id))
                     s = s + 1
                     t = t + 1
-                self.session_close()
+                
             sleep(1)
-        
+        self.session_close()
         print("取得データ" + str(i) + "個目")
         print("取得済データ" + str(s) + "個目")
 

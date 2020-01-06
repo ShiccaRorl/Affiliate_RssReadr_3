@@ -1,3 +1,3 @@
 #!/usr/bin/bash
 
-Python A_DataCopy.py now
+Python3 A_DataCopy.py now

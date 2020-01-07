@@ -28,19 +28,31 @@ class CrontabControl:
             subprocess.call('./3_CreateHtml.cmd > ./test.txt')
             print("予定していたスケジュールを実行しました")
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
+
+    # コマンドを指定
+    command = '/home/ban/ドキュメント/Affiliate_RssReadr_3/4_html作成.sh > ./sakusei.txt'
+    # スケジュールを指定
+    schedule = '0 * * * *'
+    # ファイルを指定
+    file = 'A_output.tab'
+    # インスタンス作成
+    c = CrontabControl()
+    # ファイルに書き込む
+    c.write_job(command, schedule, file)
+
+    # コマンドを指定
+    command = 'python3 /home/ban/ドキュメント/Affiliate_RssReadr_3/A_DataCopy.py now'
+    # スケジュールを指定
+    schedule = '15 * * * *'
+    # ファイルを指定
+    file = 'A_output.tab'
+    # インスタンス作成
+    c = CrontabControl()
+    # ファイルに書き込む
+    c.write_job(command, schedule, file)
 
 
 
-# コマンドを指定
-command = './3_CreateHtml.cmd > ./test.txt'
-# スケジュールを指定
-schedule = '*/1 * * * *'
-# ファイルを指定
-file = 'A_output.tab'
-# インスタンス作成
-c = CrontabControl()
-# ファイルに書き込む
-#c.write_job(command, schedule, file)
 # タスクスケジュールの監視を開始
 c.monitor_start(file)

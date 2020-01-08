@@ -181,12 +181,11 @@ class CreateHtml
   end
 
   def html_up()
-    File.open("upload.cmd", "w") do |f|    
+    #File.open("upload.cmd", "w") do |f|    
       Dir.glob("#{@config.www_html_out_path}**/*.html").each{|file|
-        f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
-        f.puts("timeout /t 5 > nul")
+        #f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+        #f.puts("timeout /t 5 > nul")
         system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
-	sleep(1)
     }
     end
     #system("upload.cmd")

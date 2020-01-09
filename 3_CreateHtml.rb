@@ -1,9 +1,9 @@
-#! snap/ruby/166/bin/ruby
+#! snap/bin/ruby
 # -*- encoding: utf-8 -*-
 
 require "erb"
 require "date"
-require "sqlite3"
+#require "sqlite3"
 require "sequel"
 
 

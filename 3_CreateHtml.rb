@@ -4,7 +4,7 @@ require "erb"
 require "date"
 require 'sequel'
 
-require_relative  './3_Config'
+require  './3_Config'
 #require './3_kyou_no_yome'
 
 class CreateHtml

@@ -1,8 +1,11 @@
+#! snap/ruby/166/bin/ruby
 # -*- encoding: utf-8 -*-
 
 require "erb"
 require "date"
-require 'sequel'
+require "sqlite3"
+require "sequel"
+
 
 require './3_Config'
 #require './3_kyou_no_yome'

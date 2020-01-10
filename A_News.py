@@ -14,8 +14,9 @@ class News(Base):
     id = Column(Integer, primary_key=True)
     feedId = Column(Integer)
     title = Column(String)
-    published = Column(DateTime)
-    received = Column(DateTime)
+    published = Column(String)
+    published_datetime = Column(DateTime)
+    received = Column(String)
     link_href = Column(String)
  
 if __name__ == "__main__":

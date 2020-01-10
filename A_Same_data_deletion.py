@@ -25,27 +25,34 @@ class SameDataDeletion():
 
     def timeInput(self):
         i = 0
-        self.session_open() # .filter(News.id==i, News.published_datetime==None)
-        for row2 in self.session2.query(News).filter(News.published_datetime==None).order_by(News.id).all(): # 全データ指定
-            try:
-                print(row2.title)
-                time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
-                print(time1)
-                #article = self.session2.query(News).filter(row2.id==i, row2.published_datetime==None).first()
+        for i in range(50000):
+            self.session_open() # .filter(News.id==i, News.published_datetime==None)
+            for row2 in self.session2.query(News).filter(News.published_datetime==None).order_by(News.id).limit(100): # 全データ指定
+                try:
+                    print(row2.title)
+                    # 「T」「Z」が邪魔である
+                    z = row2.published.replace("Z", "") # Z削除
+                    print ("z : " + z)
+                    t = z.replace("T", " ") # T削除
+                    print ("t : " + t)
+                    time1 = datetime.datetime.strptime(t, '%Y-%m-%d %H:%M:%S') # 文字列を時間に変換
+                    print(str(time1))
+                    #article = self.session2.query(News).filter(row2.id==i, row2.published_datetime==None).first()
 
-                row2.published_datetime = time1
+                    row2.published_datetime = time1
 
-                self.session2.commit()
-                print ("データ追加")
-                print(str(row2.id))
-                i = i + 1
-            except:
-                print ("データがあります。")
-                print(str(row2.id))
+                    self.session2.commit()
+                    print ("データ追加")
+                    print(str(row2.id))
+                    #i = i + 1
+                except:
+                    print ("データがあります。")
+                    print(str(row2.id))
+                    break
             
-            sleep(1)
-        self.session_close()
-        print("取得データ" + str(i) + "個目")
+                sleep(1)
+            self.session_close()
+            print("取得データ" + str(i) + "個目")
 
     def delete(self):
         print ("")

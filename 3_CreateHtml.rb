@@ -46,7 +46,7 @@ class CreateHtml
     #@db = Sequel.sqlite("RssData.SQLite3", options)
 
     @config.home_category.each{|x, y|
-      @report = @config.db[:V_news].where(Sequel.ilike(:news_title, "%#{ x }%")).limit(100).order(Sequel.desc(:published)).all
+      @report = @config.db[:V_news].where(Sequel.ilike(:title, "%#{ x }%")).limit(100).order(Sequel.desc(:published)).all
       @html = @header + @body + @footer
 
       #p changelogmemo
@@ -182,7 +182,7 @@ class CreateHtml
 
   def html_up()
     #File.open("upload.cmd", "w") do |f|    
-      Dir.glob("#{@config.www_html_out_path}**/*.html").each{|file|
+      Dir.glob("#{@config.www_html_out_path}**/index*.html").each{|file|
         #f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
         #f.puts("timeout /t 5 > nul")
         system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
@@ -194,8 +194,26 @@ class CreateHtml
 
 
 create_html = CreateHtml.new()
-create_html.create_category()
-create_html.create_body()
-#create_html.create_body_yome()
-#create_html.lftp()
-create_html.html_up()
+
+
+#
+#
+
+
+if ARGV[0] == "category" then
+  create_html.create_category()
+elsif ARGV[0] == "body" then
+  create_html.create_body()
+elsif ARGV[0] == "body_yome" then
+  create_html.create_body_yome()
+elsif ARGV[0] == "index_up" then
+  create_html.html_up()
+elsif ARGV[0] == "yome_up" then
+  create_html.yome_up()
+else
+  print "category  : カテゴリーを作成します\n"
+  print "body      : bodyページ作成\n"
+  print "body_yome : body_嫁作成\n"
+  print "index_up  : indexをアップロードする\n"
+  print "yome_up   : 嫁アップロードします\n"
+end

@@ -78,8 +78,8 @@
 
 
 
-  <a class= "title" href="<%= @config.top_home_page %>"><p style="text-align: center"><%= @config.home_title %></p></a>
-
+  <h1><a class= "title" href="<%= @config.top_home_page %>"><p style="text-align: center"><%= @config.home_title %></p></a></h1>
+　　　<h3><%= @config.home_title_sub[rand(@config.home_title_sub.size)] %>の日</h3>
   <p style="text-align: right"><%= Time.now.strftime("%Y-%m-%d %H:%M:%S (#{@config.wd[Time.now().wday]})") %>更新</p>
 
   <hr>

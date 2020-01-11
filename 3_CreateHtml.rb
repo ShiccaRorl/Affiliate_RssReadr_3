@@ -185,7 +185,7 @@ class CreateHtml
     #File.open("upload.cmd", "w") do |f|    
       Dir.glob("#{@config.www_html_out_path}**/index*.html").each{|file|
         #f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
-        #f.puts("timeout /t 5 > nul")
+        f.puts("timeout /t 5 > nul")
         system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
     }
     end
@@ -195,11 +195,6 @@ class CreateHtml
 
 
 create_html = CreateHtml.new()
-
-
-#
-#
-
 
 if ARGV[0] == "category" then
   create_html.create_category()
@@ -217,4 +212,6 @@ else
   print "body_yome : body_嫁作成\n"
   print "index_up  : indexをアップロードする\n"
   print "yome_up   : 嫁アップロードします\n"
+  create_html.create_body()
+  create_html.html_up()
 end

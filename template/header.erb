@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head>
+  <meta charset = "utf-8">
+  <meta name="name" content="content">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Last-Modified" content="<%= Time.now().strftime("%Y-%m-%d %H:%M:%S (%A)") %> GMT">
+  <meta name="keywords" content="<%= @keyword %> ">
+  <meta name="description" content="<%= @config.home_description() %>">
+  <link rel="stylesheet" href="theme/base.css" type="text/css" media="all">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="<%= @config.top_home_page %>index.rss" />
+
+  <link rel="stylesheet" href="<%= @config.css_theme_path %>" title="<%= @config.home_title %>" type="text/css" media="all">
+
+  <title><%= @config.home_title %></title>
+
+  <style type="text/css">
+    .title{
+      font-size: 30pt;
+    }
+    .page{
+      font-size: 20pt;
+      clear: both;
+    }
+    code{
+      font-size: 20pt;
+      color: white;
+      background-color: #FFFFFF;
+    }
+    a:visited{
+      color: #FF0000;
+    }
+    #page_a{
+      font-size: 30pt;
+      color: black;
+    }
+    .menu{
+      font-size: 25pt;
+      width: 20%;
+      float: left;
+    }
+    .reset{
+      clear: both;
+    }
+    .left1{
+      width: 20%;
+      float: left;
+    }
+    .left2{
+      width: 60%;
+      float: center;
+    }
+    .left3{
+      width: 20%;
+      float: right;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- [FC2 Analyzer] //analyzer.fc2.com/  -->
+  <script language="javascript" src="//analyzer54.fc2.com/ana/processor.php?uid=2832601" type="text/javascript"></script>
+  <noscript><div align="right"><img src="//analyzer54.fc2.com/ana/icon.php?uid=2832601&ref=&href=&wid=0&hei=0&col=0" /></div></noscript>
+  <!-- [FC2 Analyzer]  -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-139925461-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-139925461-2');
+</script>
+
+
+
+
+  <a class= "title" href="<%= @config.top_home_page %>"><p style="text-align: center"><%= @config.home_title %></p></a>
+
+  <p style="text-align: right"><%= Time.now.strftime("%Y-%m-%d %H:%M:%S (#{@config.wd[Time.now().wday]})") %>更新</p>
+
+  <hr>

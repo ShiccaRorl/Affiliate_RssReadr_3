@@ -25,7 +25,7 @@ class SameDataDeletion():
 
     def timeInput(self):
         i = 0
-        for i in range(50000):
+        for i in range(500000):
             self.session_open() # .filter(News.id==i, News.published_datetime==None)
             for row2 in self.session2.query(News).filter(News.published_datetime==None).order_by(News.id).limit(100): # 全データ指定
                 try:

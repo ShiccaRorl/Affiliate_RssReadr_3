@@ -7,7 +7,7 @@ class Config
     # 取得した画像を処理する設定
     attr_accessor :gazou_path, :scrapBook, :file_size, :source_scrapBook, :c_source_scrapBook, :c_gazou_path, :c_scrapBook
     # ホームページの設定
-    attr_accessor :home_title, :top_home_page, :home_category, :limit, :home_description, :css_theme_path, :www_html_out_path, :wd
+    attr_accessor :home_title, :top_home_page, :home_category, :limit, :home_description, :css_theme_path, :www_html_out_path, :wd, :home_title_sub
     # アフェリエイトの設定
     attr_accessor :affiliate, :article_size, :affiliate_size, :affiliate_DMM_size, :affiliate_DMM_Video_top_size, :affiliate_DMM_Video_size
     attr_accessor :affiliate_DMM, :affiliate_DMM_Video_Top, :affiliate_DMM_Video
@@ -55,6 +55,7 @@ class Config
 
     # ホームページタイトル
     @home_title = "今日の嫁"
+    @home_title_sub = ["ごっくん","フェラ","ぶっかけ"]
 
     # ホームページトップ
     @top_home_page = "http://kyounoyome.x.fc2.com/"

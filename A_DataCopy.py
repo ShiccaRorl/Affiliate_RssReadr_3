@@ -107,11 +107,11 @@ class DataCopy():
 
 
 
-    def get_all_now(self,day):
+    def get_all_now(self,kosuu):
         i = 0
         s = 0
         self.session_open()
-        for row2 in self.session2.query(QuiteRSS).order_by(desc(News.id)).limit(day): # データ指定
+        for row2 in self.session2.query(QuiteRSS).order_by(desc(News.id)).limit(500): # データ指定
             t = 0
             if t <= 20:
                 try:
@@ -137,6 +137,9 @@ class DataCopy():
                     print(str(row2.id))
                     s = s + 1
                     t = t + 1
+
+            if s >= kosuu:
+                break
                 
             sleep(1)
         self.session_close()
@@ -177,7 +180,7 @@ if __name__ == '__main__':
     elif args[1] == "sin":
         t.get_all_sin()
     elif args[1] == "now":
-        t.get_all_now(100)
+        t.get_all_now(30)
     elif args[1] == "html":
         command = 'C:/Affiliate_RssReadr_3/Affiliate_RssReadr_3/3_CreateHtml.cmd > ./part1.txt'
         subprocess.run(command)

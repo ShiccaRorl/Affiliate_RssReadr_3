@@ -1,0 +1,47 @@
+rem 2019-12-22
+
+rem pipのアップデート
+call pip install --upgrade pip
+rem ==========================
+rem 環境構築
+
+rem $ sudo easy_install virtualenv
+rem こちらも同様以上の事が可能です:
+
+rem $ sudo pip install virtualenv
+
+rem Ubuntuであれば以下のように指定インストール出来ます
+
+rem $ sudo apt-get install python-virtualenv
+
+rem ====古い？====
+rem Windowsをお使いの方は、まず easy_install をインストールしてください。 easy_install on Windows が参考になるかも知れません。インストールが 完了したら上記コマンドを実行することが可能です。（ sudo の記述は省いてください
+rem Pythonバージョン管理(Pyenv)インストール
+call pip install pipenv
+ren ==============
+
+
+rem ディレクトリを作成
+call mkdir THE_HOW_of_HAPPINESS
+
+rem ディレクトリを作成を移動
+call cd THE_HOW_of_HAPPINESS
+
+rem envという環境を作ります
+call virtualenv env
+
+rem この環境を使用するようにアクティブ化する必要があります。OS XとLinuxでは以下のコマンドを実行します
+rem $ . env/bin/activate
+rem Windows環境であれば、以下のコマンドを実行します:
+rem $ env\scripts\activate
+
+rem プロジェクトで使うパッケージのインストール
+call pipenv install requests
+
+
+
+rem サーバー起動
+call python index.py
+
+http://127.0.0.1:5000/
+

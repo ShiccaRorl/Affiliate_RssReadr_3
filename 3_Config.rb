@@ -47,11 +47,20 @@ class Config
     #何かオプションを指定する場合は下記に追記する
     options = {:encoding=>"utf8"}
     #DBに接続
-    @db = Sequel.sqlite(@db_file_path, options)
+    begin
+        @db = Sequel.sqlite(@db_file_path, options)
+    rescue
+        print "本物のデータベースが開かない\n"
+    end
 
     # こちらのデータベース
     options = {:encoding=>"utf8"}
-    @my_db = Sequel.sqlite("C:/Affiliate_RssReadr_3./RssData.SQLite3", options)
+    begin
+        @my_db = Sequel.sqlite("C:/Affiliate_RssReadr_3./RssData.SQLite3", options)
+    rescue
+        print "コピーのデータベースが開かない\n"
+    end
+
 
     # ホームページタイトル
     @home_title = "今日の嫁"

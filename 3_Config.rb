@@ -47,11 +47,7 @@ class Config
     #何かオプションを指定する場合は下記に追記する
     options = {:encoding=>"utf8"}
     #DBに接続
-    begin
-        @db = Sequel.sqlite(@db_file_path, options)
-    rescue
-        print "本物のデータベースが開かない\n"
-    end
+    @db = Sequel.sqlite(@db_file_path, options)
 
     # こちらのデータベース
     options = {:encoding=>"utf8"}

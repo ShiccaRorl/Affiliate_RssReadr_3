@@ -13,7 +13,7 @@ import tkinter.messagebox as tkmbx
 
 LOCKFILE = 'CLM_BKUP_EXIST.lock'
 
-BKUP_DIR = "C:\\home\\bkup"
+BKUP_DIR = "L:/backup"
 INTENDED_FILE = ["{}01\d\d[-].clm$".format(time.strftime("%y"))]
 SOURCE_DIR_NAME = "CLM"
 

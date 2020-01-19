@@ -83,7 +83,7 @@ class CreateHtml
 
     @page_no = 0
     (1..@page_end).each{|damy|
-      @report = @config.db[:V_news].limit(@config.limit).offset(start).order(Sequel.desc(:published)).all
+      @report = @config.my_db[:V_news].limit(@config.limit).offset(start).order(Sequel.desc(:published)).all
       
       start = @config.limit * @page_no
 

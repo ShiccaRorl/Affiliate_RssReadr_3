@@ -44,14 +44,31 @@ class DataCopy():
             #print (row2.title)
             #print (self.session2.query(News.title).one)
 
-            if self.session2.query(row2.title) == []:
+           if self.session1.query(QuiteRSS).filter(QuiteRSS.title == row2.title).all() == []:
                 print("データ無し\n")
-                
-                """
                 try:
                     print(row2.title)
-                    time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
-                    time2 = datetime.datetime.strptime(row2.received.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+                    # 「T」「Z」が邪魔である
+                    z = row2.published.replace("Z", "") # Z削除
+                    #print ("z : " + z)
+                    t = z.replace("T", " ") # T削除
+                    #print ("t : " + t)
+                    time1 = datetime.datetime.strptime(t, '%Y-%m-%d %H:%M:%S') # 文字列を時間に変換
+                    print(str(time1))
+
+                    #time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+                    
+
+                    # 「T」「Z」が邪魔である
+                    z = row2.received.replace("Z", "") # Z削除
+                    #print ("z : " + z)
+                    t = z.replace("T", " ") # T削除
+                    #print ("t : " + t)
+                    time2 = datetime.datetime.strptime(t, '%Y-%m-%d %H:%M:%S') # 文字列を時間に変換
+                    #print(str(time2))
+                    
+                    #time2 = datetime.datetime.strptime(row2.received.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+        
         
                     quite_rss = News()
                     quite_rss.id = row2.id
@@ -72,7 +89,7 @@ class DataCopy():
                     s = s + 1
             
                 sleep(1)
-                """
+                
         self.session_close()
         print("取得データ" + str(i) + "個目")
         print("取得済データ" + str(s) + "個目")
@@ -84,14 +101,32 @@ class DataCopy():
         s = 0
         self.session_open()
         for row2 in self.session2.query(QuiteRSS).order_by(desc(News.id)).all(): # 全データ指定
-            print(self.session1.query(row2.title))
-            if self.session1.query(row2.title) == False:
+            if self.session1.query(QuiteRSS).filter(QuiteRSS.title == row2.title).all() == []:
                 print("データ無し\n")
                 try:
                     print(row2.title)
-                    time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
-                    time2 = datetime.datetime.strptime(row2.received.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+                    # 「T」「Z」が邪魔である
+                    z = row2.published.replace("Z", "") # Z削除
+                    #print ("z : " + z)
+                    t = z.replace("T", " ") # T削除
+                    #print ("t : " + t)
+                    time1 = datetime.datetime.strptime(t, '%Y-%m-%d %H:%M:%S') # 文字列を時間に変換
+                    print(str(time1))
+
+                    #time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+                    
+
+                    # 「T」「Z」が邪魔である
+                    z = row2.received.replace("Z", "") # Z削除
+                    #print ("z : " + z)
+                    t = z.replace("T", " ") # T削除
+                    #print ("t : " + t)
+                    time2 = datetime.datetime.strptime(t, '%Y-%m-%d %H:%M:%S') # 文字列を時間に変換
+                    #print(str(time2))
+                    
+                    #time2 = datetime.datetime.strptime(row2.received.replace("T", " "), '%Y-%m-%d %H:%M:%S')
         
+
                     quite_rss = News()
                     quite_rss.id = row2.id
                     quite_rss.feedId = row2.feedId
@@ -121,15 +156,33 @@ class DataCopy():
         i = 0
         s = 0
         self.session_open()
-        for row2 in self.session2.query(QuiteRSS).order_by(desc(News.id)).limit(kosuu): # データ指定
+        for row2 in self.session2.query(QuiteRSS).order_by(desc(News.id)).limit(500): # データ指定
             t = 0
             if t <= 20:
-                if self.session1.query(row2.title) == False:
+                if self.session1.query(QuiteRSS).filter(QuiteRSS.title == row2.title).all() == []:
                     print("データ無し\n") 
                     try:
                         print(row2.title)
-                        time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
-                        time2 = datetime.datetime.strptime(row2.received.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+                        # 「T」「Z」が邪魔である
+                        z = row2.published.replace("Z", "") # Z削除
+                        #print ("z : " + z)
+                        t = z.replace("T", " ") # T削除
+                        #print ("t : " + t)
+                        time1 = datetime.datetime.strptime(t, '%Y-%m-%d %H:%M:%S') # 文字列を時間に変換
+                        print(str(time1))
+
+                        #time1 = datetime.datetime.strptime(row2.published.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+                    
+
+                        # 「T」「Z」が邪魔である
+                        z = row2.received.replace("Z", "") # Z削除
+                        #print ("z : " + z)
+                        t = z.replace("T", " ") # T削除
+                        #print ("t : " + t)
+                        time2 = datetime.datetime.strptime(t, '%Y-%m-%d %H:%M:%S') # 文字列を時間に変換
+                        #print(str(time2))
+                    
+                        #time2 = datetime.datetime.strptime(row2.received.replace("T", " "), '%Y-%m-%d %H:%M:%S')
         
                         quite_rss = News()
                         quite_rss.id = row2.id

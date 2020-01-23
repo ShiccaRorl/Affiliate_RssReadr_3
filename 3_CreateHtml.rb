@@ -49,7 +49,7 @@ class CreateHtml
     #@db = Sequel.sqlite("RssData.SQLite3", options)
 
     @config.home_category.each{|x, y|
-      @report = @config.db[:V_news].where(Sequel.ilike(:title, "%#{ x }%")).limit(100).order(Sequel.desc(:published)).all
+      @report = @config.my_db[:V_news].where(Sequel.ilike(:news_title, "%#{ x }%")).limit(100).order(Sequel.desc(:published)).all
       @html = @header + @body + @footer
 
       #p changelogmemo

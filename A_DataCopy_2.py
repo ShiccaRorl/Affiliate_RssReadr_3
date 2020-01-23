@@ -212,7 +212,7 @@ class DataCopy():
         print("取得済データ" + str(s) + "個目")
 
     def null_kill(self):
-        for row2 in self.session2.query(News.published==None).order_by(desc(News.id)).all: # 全データ指定
+        for row2 in self.session2.query(News.published==None).order_by(desc(News.id)).all(): # 全データ指定
             print(row2)
             print (row2.title)    
 

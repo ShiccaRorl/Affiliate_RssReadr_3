@@ -76,8 +76,8 @@ class CreateHtml
     #@db = Sequel.sqlite("RssData.SQLite3", options)
     #@config = Config.new()
 
-    #@page_end = @config.db[:V_news].all.size / @config.limit
-    @page_end = 10
+    @page_end = @config.my_db[:V_news].all.size / @config.limit
+    #@page_end = 10
     @page_no = 0
     start = @config.limit * @page_no
 
@@ -192,7 +192,7 @@ class CreateHtml
 	      sleep(1)
     }
     end
-    #system("upload.cmd")
+    #system("4_アップロード.cmd")
   end
 end
 

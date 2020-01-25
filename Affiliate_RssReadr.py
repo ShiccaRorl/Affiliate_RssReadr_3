@@ -14,30 +14,45 @@ from A_DataCopy import DataCopy
 class RssReadr:
     def part1(self):
         timer = 60*60 # 一時間に一度HTMLを作成うｐする
-        command = 'C:/Affiliate_RssReadr_3/Affiliate_RssReadr_3/3_CreateHtml.cmd > ./part1.txt'
+        command = './4_html作成.cmd'
         subprocess.run(command)
         sleep(timer)
 
     def part2(self):
         timer = 60*15 # 15分に一度最近のを取り出す
-        datacopy = DataCopy()
-        datacopy.get_all_now(300)
+        command = './4_最新.cmd'
+        subprocess.run(command)
         sleep(timer)
 
     def part3(self):
         timer = 60*60*24*20 # 20日に一度最近から取り出す
-        datacopy = DataCopy()
-        datacopy.get_all_sin()
+        command = './4_新しい→古い.cmd'
+        subprocess.run(command)
         sleep(timer)
 
     def part4(self):
         timer = 60*60*24*20 # 20日に一度古い方から取り出す
-        datacopy = DataCopy()
-        datacopy.get_all_old()
+        command = './4_古い→新しい.cmd'
+        subprocess.run(command)
+        sleep(timer)
+
+    def part5(self):
+        timer = 60*60*24 # 1日に一度カテゴリーの更新
+        command = './4_カテゴリー作成.cmd'
+        subprocess.run(command)
+        sleep(timer)
+
+    def part6(self):
+        timer = 60*60*24*10 # 10日に一度重複記事を削除
+        command = './4_古い→新しい.cmd'
+        subprocess.run(command)
         sleep(timer)
 
     def bkup(self):
-        print("")
+        timer = 60*60*24*5 # 5日に一度バックアップ
+        command = './4_バックアップ.cmd'
+        subprocess.run(command)
+        sleep(timer)
 
 
 
@@ -49,6 +64,9 @@ class RssReadr:
             tpool.submit(self.part2())
             tpool.submit(self.part3())
             #tpool.submit(self.part4())
+            tpool.submit(self.part5())
+            tpool.submit(self.part6())
+            tpool.submit(self.bkup())
         print("main thread exit.")
 
 

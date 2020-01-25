@@ -1,0 +1,1 @@
+python A_Same_data_deletion_2.py all

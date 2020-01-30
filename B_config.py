@@ -11,8 +11,12 @@ from datetime import datetime
 import os
 
 import requests
+
 from io import StringIO
 from time import sleep
+import re
+
+import subprocess
 
 class Config():
     def __init__(self):
@@ -54,23 +58,22 @@ class MGS記事():
         self.id = id
         self.作品名 = ""
         self.女優 = ""
-        self.基本url = ""
-        self.url = ""
-        self.記事元dir = ""
         self.aff = "C7EL5ZIM2LIYL36AOUMDGYKNTJ"
-        self.基本url = "https://www.mgstage.com/product/product_detail/" + self.id
-        self.url = self.基本url + "/?aff=" + self.aff
-        self.記事元dir = self.config.記事_dir + self.id
+        self.基本url = "https://www.mgstage.com/product/product_detail/" + self.id + "/"
+        self.url = self.基本url + "?aff=" + self.aff
+        self.記事元dir = self.config.記事_dir + self.id + "/"
+        self.サンプル動画 = ""
+        self.photo_s = []
 
 
         #print(self.基本url)
         self.データベース補完()
         self.ディレクトリーファイルの初期化()
-        self.ページをダウンロードする()
+        #self.ページをダウンロードする()
+        
+        self.ファイルを配置する()
         #self.解析する()
-        #self.ファイルを配置する()
-
-
+        self.rubyを実行する()
 
 
     def データベース補完(self):
@@ -149,26 +152,53 @@ class MGS記事():
                 print("seed.dat  存在する。")
         else:
             print("seed.dat ファイルは存在しない。")
-            resp = requests.get(self.基本url) # ダウンロード
+            headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36",
+                        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",}
+            resp = requests.get(self.基本url, headers=headers)  # ダウンロード
+            print(resp.status_code)
+            print(resp.headers)
+            print(resp.text)
             s_new = ''.join(resp.text.splitlines())
-            with open(self.記事元dir + "/seed.dat", 'w', encoding="utf-8") as f:
+            with open(self.記事元dir + "seed.dat", 'w', encoding="utf-8") as f:
                 f.write(s_new)
                 f.close()
             sleep(10)
 
+    def ファイルを配置する(self):
+        if os.path.exists(self.記事元dir + "seed.txt"):
+            print("seed.txt  存在する。")
+        else:
+            with open(self.記事元dir + "seed.txt", 'w', encoding="utf-8") as f:
+                f.write("")
+                f.close()
+
+        if os.path.exists(self.記事元dir + "サンプル動画.txt"):
+                print("サンプル動画.txt  存在する。")
+        else:
+            with open(self.記事元dir + "サンプル動画.txt", 'w', encoding="utf-8") as f:
+                f.write("")
+                f.close()
+
+        if os.path.exists(self.記事元dir + "記事.txt"):
+                print("記事.txt  存在する。")
+        else:
+            with open(self.記事元dir + "記事.txt", 'w', encoding="utf-8") as f:
+                f.write("")
+                f.close()
 
     def 解析する(self):
-        with open("seed.dat", "r", encoding="utf-8") as f:
-            f.read()
+        f = open(self.記事元dir + "seed.txt", "r", encoding="utf-8")
+        s = f.read()
+        f.close()
+        seed = ''.join(s.splitlines())
+        #p = re.compile(r'(<title>).*?')
+        #m = p.match(seed)
+        match = re.search(r'<title>(.*?)</title>', seed)
+        print(match.group(0))
+        #print(m)
 
-    def ファイルを配置する(self):
-        os.path.exists(self.記事元dir + "/")
-
-    
-
-
-
-
+    def rubyを実行する(self):
+        subprocess.run("ruby B_Config.rb")
 
 class MGS記事s():
     def __init__(self):
@@ -179,10 +209,11 @@ class MGS記事s():
         self.記事s = []
         t = 0
         for i in self.mgs_ids:
-            if t == 0:
-                t = 1
-            else:
-                self.記事s.append(MGS記事(list(i)[0]))
+            print (i)
+            #if t == 0:
+            #    t = 1
+            #else:
+            self.記事s.append(MGS記事(list(i)[0]))
 
         #del self.記事s[0] #削除出来たらいいのだけど。
         #self.記事s.remove(None) #出来ない。
@@ -194,4 +225,5 @@ if __name__ == '__main__':
     config = Config()
     
     MGS記事s = MGS記事s()
+    #MGS記事 = MGS記事("ABP-933")
 

@@ -16,7 +16,7 @@ class Create_Rss
     rss = RSS::Maker.make("1.0") do |maker|
       maker.channel.about = @config.top_home_page + "index.rss"
       maker.channel.title = @config.home_title
-      maker.channel.description = @config.home_description[0]
+      maker.channel.description = @config.home_description[rand(@config.home_description.size)]
       maker.channel.link = @config.top_home_page
 
       @config.my_db[:Article].order(:article_date).limit(20).all.each{|report|

@@ -19,6 +19,13 @@ class RssReadr:
             subprocess.run(command)
             sleep(timer)
 
+    def part1_1(self):
+        timer = 60*60 # 一時間に一度HTMLを作成うｐする
+        command = '4_アップロード.cmd'
+        while True:
+            subprocess.run(command)
+            sleep(timer)
+
     def part2(self):
         timer = 60*15 # 15分に一度最近のを取り出す
         command = '4_最新.cmd'
@@ -71,6 +78,7 @@ class RssReadr:
         while True:
             print("Threads: {}".format(len(tpool._threads)))  # スレッド数を表示
             tpool.submit(self.part1())
+            tpool.submit(self.part1_1())
             tpool.submit(self.part2())
             tpool.submit(self.part3())
             #tpool.submit(self.part4())

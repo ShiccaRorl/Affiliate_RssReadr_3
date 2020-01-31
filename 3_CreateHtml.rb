@@ -97,11 +97,11 @@ class CreateHtml
 
       #print "Report 最大 " + @config.db[:news].all.size.to_s + "\n"
       if @page_no == 0 then
-        begin
-          File.write(@config.www_html_out_path + "index.html", @html)
-        rescue
-          print "index 書き込みエラー\n"
-        end
+        #begin
+          #File.write(@config.www_html_out_path + "index.html", @html)
+        #rescue
+          #print "index 書き込みエラー\n"
+        #end
       else
         begin
           #print "ページ  #{@page_no}  作成\n"
@@ -184,12 +184,14 @@ class CreateHtml
   end
 
   def html_up()
-    File.open("4_アップロード.cmd", "w") do |f|    
+    File.open("4_アップロード.cmd", "w") do |f|
+      f.puts("#{@config.www_html_out_path}*/*.css")
       Dir.glob("#{@config.www_html_out_path}**/*.html").each{|file|
         f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
         f.puts("timeout /t 5 > nul")
-        system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
-	      sleep(1)
+        #system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+        #system("timeout /t 5 > nul")
+        sleep(1)
     }
     end
     #system("4_アップロード.cmd")

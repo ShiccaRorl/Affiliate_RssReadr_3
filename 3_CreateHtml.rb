@@ -185,12 +185,15 @@ class CreateHtml
 
   def html_up()
     File.open("4_アップロード.cmd", "w") do |f|
-      f.puts("#{@config.www_html_out_path}*/*.css")
+      Dir.glob("#{@config.www_html_out_path}**/*.css").each{|file|
+        f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+      }
+      
       Dir.glob("#{@config.www_html_out_path}**/*.html").each{|file|
         f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
         f.puts("timeout /t 5 > nul")
-        #system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
-        #system("timeout /t 5 > nul")
+        system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+        system("timeout /t 5 > nul")
         sleep(1)
     }
     end

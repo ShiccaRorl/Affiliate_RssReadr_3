@@ -21,9 +21,12 @@ import subprocess
 class Config():
     def __init__(self):
         self.db_dir = "C:/Affiliate_RssReadr_3/Affiliate_Data.SQLite3"
-        self.記事_dir = "./記事/"
+        self.サイト名 = "MGS"
+        self.記事_dir = "E:/www/" + self.サイト名 + "/"
         self.肩書 = "４０歳童貞大魔法使いによる、今晩の嫁さがし。"
+        
 
+        
 
         # データベースのIDから記事DIRがあるか確認する
         # 無ければ作る。
@@ -91,7 +94,7 @@ class MGS記事():
         except:
             print ("aff err============")
         self.config.session_close()
-        # ===================================謎のエラーが起きているので「self.基本url」を使ってください。
+        # ===================================謎のエラーが起きているので「self.基本url」を使ってください。↓
         self.config.session_open()
         print(self.基本url)
         try:
@@ -106,7 +109,7 @@ class MGS記事():
         except:
             print ("基本url err============")
         self.config.session_close()
-        # ===================================
+        # ===================================謎↑
         self.config.session_open()
         try:
             if self.config.session.query(Affiliate_MGS_Video).filter(Affiliate_MGS_Video.url==None).first():
@@ -207,7 +210,7 @@ class MGS記事s():
         self.config.session_open()
         self.mgs_ids = self.config.session.query(Affiliate_MGS_Video.id).all()
         self.記事s = []
-        t = 0
+        #t = 0
         for i in self.mgs_ids:
             print (i)
             #if t == 0:

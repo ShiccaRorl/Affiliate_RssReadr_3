@@ -208,7 +208,7 @@ class MGS記事s():
         self.config = Config()
 
         self.config.session_open()
-        self.mgs_ids = self.config.session.query(Affiliate_MGS_Video.id).all()
+        self.mgs_ids = self.config.session.query(Affiliate_MGS_Video.id).filter(Affiliate_MGS_Video.固定==0).all()
         self.記事s = []
         #t = 0
         for i in self.mgs_ids:

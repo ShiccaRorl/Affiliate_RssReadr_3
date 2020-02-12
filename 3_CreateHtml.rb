@@ -27,7 +27,21 @@ class CreateHtml
 
     self.keyword()
 
+    options = {:encoding=>"utf8"}
+    @aff_db = Sequel.sqlite("C:/Affiliate_RssReadr_3/Affiliate_Data.SQLite3", options)
+    RSSから記事リストを作成する()
+
   end
+
+    def RSSから記事リストを作成する()
+        i = []
+        @aff_db[:Article].where(:直接_flag=>0).limit(20).order(Sequel.expr(:use_time).desc).each{|article|
+            i << "<a href=\"#{article[:article_link]}\"><img src=\"#{article[:サムネイル_path]}\" alt=\"記事\" width=\"300\" title=\"#{article[:article_title]}\"><\/a><br>#{article[:article_title]}<br>"
+        }
+        @公開リスト = i
+
+    end
+
 
   def keyword()
     @keyword = ""
@@ -68,6 +82,27 @@ class CreateHtml
     }
   end
 
+  def create_index()
+    @report = @config.my_db[:V_news].limit(@config.limit).order(Sequel.desc(:published)).all
+    @html = @header + @body + @footer
+
+    erb = ERB.new(@html)
+
+    @html = erb.result(binding)
+    File.write(@config.www_html_out_index + "index.html", @html)
+    
+    File.open("4_アップロード_index.cmd", "w") do |f|
+        f.puts("curl -# -T #{@config.www_html_out_index}index.html -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+        f.puts("timeout /t 5 > nul")
+        f.puts("curl -# -T #{@config.www_html_out_index}index.rss -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+        f.puts("timeout /t 5 > nul")
+        f.puts("curl -# -T #{@config.www_html_out_index}robots.txt -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+        f.puts("timeout /t 5 > nul")
+        f.puts("curl -# -T #{@config.www_html_out_index}index_dummy.rss -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+
+      end
+  end
+
   def create_body()
     #何かオプションを指定する場合は下記に追記する
     #options = {:encoding=>"utf8"}
@@ -97,11 +132,11 @@ class CreateHtml
 
       #print "Report 最大 " + @config.db[:news].all.size.to_s + "\n"
       if @page_no == 0 then
-        #begin
-          #File.write(@config.www_html_out_path + "index.html", @html)
-        #rescue
-          #print "index 書き込みエラー\n"
-        #end
+        begin
+          File.write(@config.www_html_out_path + "index.html", @html)
+        rescue
+          print "index 書き込みエラー\n"
+        end
       else
         begin
           #print "ページ  #{@page_no}  作成\n"
@@ -186,15 +221,15 @@ class CreateHtml
   def html_up()
     File.open("4_アップロード.cmd", "w") do |f|
       Dir.glob("#{@config.www_html_out_path}**/*.css").each{|file|
-        f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+        #f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
       }
       
-      Dir.glob("#{@config.www_html_out_path}**/*.html").each{|file|
-        f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+      Dir.glob("#{@config.www_html_out_path}*/*.html").each{|file|
+        f.puts("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/article/")
         f.puts("timeout /t 5 > nul")
-        system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
-        system("timeout /t 5 > nul")
-        sleep(1)
+        #system("curl -# -T #{file} -u #{@config.ftp_user}:#{@config.ftp_pass} -w %{url_effective}:%{http_code} --ftp-create-dirs -ftp-ssl -ftp-pasv ftp://#{@config.ftp_server}/")
+        #system("timeout /t 5 > nul")
+        #sleep(1)
     }
     end
     #system("4_アップロード.cmd")
@@ -216,6 +251,8 @@ elsif ARGV[0] == "up_all"
   create_html.lftp()
 elsif ARGV[0] == "html_up"
   create_html.html_up()
+elsif ARGV[0] == "index"
+  create_html.create_index()
 else
 
 end
